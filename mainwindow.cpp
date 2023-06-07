@@ -20,10 +20,28 @@ bool MainWindow::openControllerWidget()
         synController->parentWidget()->close();
     }
 
-    synController = new SynControllerWidget(isSynClosed);
-    ui->mdiArea->addSubWindow(synController);
+    if (QMdiSubWindow* activeSubWindow = ui->mdiArea->activeSubWindow())
+        lastOpenedTextEdit = qobject_cast<MyTextEdit*>(activeSubWindow->widget());
 
+    synController = new SynControllerWidget(isSynClosed, lastOpenedTextEdit, this);
+//    ui->mdiArea->addSubWindow(synController);
+
+//    synController->loadSyns();
+    const QList<QMdiSubWindow*> subWindows = ui->mdiArea->subWindowList();
+    QStringList l;
+    for (QMdiSubWindow* window : subWindows) {
+        MyTextEdit* mdiChild = qobject_cast<MyTextEdit*>(window->widget());
+        if (mdiChild) {
+            if (mdiChild->currentFile().endsWith(".syn")) {
+//                synController->load4SD(mdiChild->currentFile());
+                l.append(mdiChild->currentFile());
+            }
+        }
+    }
+    synController->load4SD(l);
     synController->show();
+    statusBar()->showMessage("Last opened: " + lastOpenedTextEdit->currentFile());
+
 
     return true;
 }
@@ -162,11 +180,11 @@ void MainWindow::createActions()
     fileMenu->addAction(controlOpen);
     fileToolBar->addAction(controlOpen);
 
-    const QIcon acceptWidIcon = QIcon::fromTheme("document-accept", QIcon(":/images/accept.png"));
-    QAction* acceptSyn = new QAction(acceptWidIcon, "Acce&pt", this);
-    connect(acceptSyn, &QAction::triggered, this, &MainWindow::synChild);
-    fileMenu->addAction(acceptSyn);
-    fileToolBar->addAction(acceptSyn);
+//    const QIcon acceptWidIcon = QIcon::fromTheme("document-accept", QIcon(":/images/accept.png"));
+//    QAction* acceptSyn = new QAction(acceptWidIcon, "Acce&pt", this);
+//    connect(acceptSyn, &QAction::triggered, this, &MainWindow::synChild);
+//    fileMenu->addAction(acceptSyn);
+//    fileToolBar->addAction(acceptSyn);
 
     const QIcon exitIcon = QIcon::fromTheme("application-exit");
     QAction* exitAct = fileMenu->addAction(exitIcon, "E&xit", qApp, &QApplication::closeAllWindows);

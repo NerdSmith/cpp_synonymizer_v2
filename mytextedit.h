@@ -14,6 +14,7 @@ public:
     bool saveFile(const QString& fileName);
     bool loadText(QString text);
     QString currentFile() { return curFile; }
+    bool isUntitle() {return isUntitled;}
 
 private:
     void setCurrentFile(const QString& fileName);

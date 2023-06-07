@@ -19,6 +19,8 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
+    MyTextEdit* createNewTextEdit();
+
 private:
     void createActions();
     void newFile();
@@ -27,7 +29,6 @@ private:
     void synChild();
 
     bool openControllerWidget();
-    MyTextEdit* createNewTextEdit();
     MyTextEdit* activeMdiChild();
     QMdiSubWindow* findMdiChild(const QString& fileName);
     bool openFile(const QString& fileName);
@@ -39,5 +40,6 @@ private:
     QAction* saveAsAct;
     SynControllerWidget* synController = nullptr;
     bool isSynClosed = true;
+    MyTextEdit* lastOpenedTextEdit = nullptr;
 };
 #endif // MAINWINDOW_H

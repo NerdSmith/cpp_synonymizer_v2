@@ -20,6 +20,16 @@
    <string>Synonimizer control</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <widget class="QPushButton" name="deleteDictBtn">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Удалить</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -32,15 +42,18 @@
    </item>
    <item row="2" column="0">
     <widget class="QPushButton" name="loadDictBtn">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Загрузить словарь</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="deleteDictBtn">
+   <item row="4" column="0">
+    <widget class="QPushButton" name="performSyn">
      <property name="text">
-      <string>Удалить</string>
+      <string>Применить</string>
      </property>
     </widget>
    </item>
